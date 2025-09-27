@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_task/models/model/category_model.dart';
 
-class GetCategoryServices {
+class GetCategory {
   static Dio dio = Dio();
 
   static Future<List<CategoryModel>> getCategory() async {

@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_task/models/cubits/firebase_auth_cubit/firebase_auth_cubit_state.dart';
-import 'package:flutter_task/services/app_firebase_auth.dart';
+import 'package:flutter_task/services/firebase_services/firebase_auht/firebase_auth.dart';
 
 class FirebaseAuthCubit extends Cubit<FirebaseAuthCubitState> {
   FirebaseAuthCubit() : super(FirebaseAuthCubitInitial());

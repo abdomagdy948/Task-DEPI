@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_task/services/get_category_services.dart';
+import 'package:flutter_task/services/get_category.dart';
 import 'category_cubit_state.dart';
 
 class CategoryCubit extends Cubit<CategoryCubitState> {
@@ -9,7 +9,7 @@ class CategoryCubit extends Cubit<CategoryCubitState> {
     emit(CategoryCubitLoading());
 
     try {
-      final categories = await GetCategoryServices.getCategory();
+      final categories = await GetCategory.getCategory();
 
       if (categories.isNotEmpty) {
         emit(CategoryCubitSuccess(categories));
