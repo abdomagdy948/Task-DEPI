@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_task/models/cubits/firebase_auth_cubit/firebase_auth_cubit.dart';
 import 'package:flutter_task/models/cubits/firebase_auth_cubit/firebase_auth_cubit_state.dart';
 import 'package:flutter_task/screens/home_screen/home_screen.dart';
+import 'package:flutter_task/services/firebase_services/firebase_store/firebase_store.dart';
 import 'package:flutter_task/utils/app_color.dart';
 import 'package:flutter_task/utils/app_validation.dart';
 import 'package:flutter_task/widgets/custom_container_buttom.dart';
@@ -175,10 +178,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 );
 
                                 if (formKey.currentState!.validate()) {
-                                  context.read<FirebaseAuthCubit>().register(
-                                    emailController.text,
-                                    passwordController.text,
-                                  );
+                                  try {
+                                    FirebaseStore.addUser(
+                                      userName: usernameController.text,
+                                      email: emailController.text,
+                                      password: passwordController.text,
+                                      phoneNumber: phoneController.text,
+                                    );
+                                    context.read<FirebaseAuthCubit>().register(
+                                      emailController.text,
+                                      passwordController.text,
+                                    );
+                                  } on Exception catch (e) {
+                                    log(e.toString());
+                                  }
                                 }
                               },
                             ),
