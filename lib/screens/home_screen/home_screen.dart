@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   radius: 20,
                   backgroundImage: profileImage != null
                       ? FileImage(profileImage!)
-                      : AssetImage('assets/images/placeholder.png')
+                      : AssetImage('assets/images/register.jpg')
                             as ImageProvider,
                 ),
               ),

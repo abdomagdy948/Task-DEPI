@@ -6,11 +6,12 @@ import 'package:flutter_task/models/cubits/category_cubit/category_cubit.dart';
 import 'package:flutter_task/models/cubits/favorit_category_cubit/favorit_category_cubit.dart';
 import 'package:flutter_task/models/cubits/firebase_auth_cubit/firebase_auth_cubit.dart';
 import 'package:flutter_task/screens/splach_screen/splach_screen.dart';
+import 'package:flutter_task/services/firebase_services/firebase_messages/firebase_notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
+  await FirebaseNotificationService().setUp();
   runApp(
     MultiBlocProvider(
       providers: [

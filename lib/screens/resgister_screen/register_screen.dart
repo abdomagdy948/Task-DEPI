@@ -22,9 +22,13 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController middleNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  TextEditingController genderController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController usernameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -103,8 +107,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ),
                             CustomTextField(
-                              emailController: usernameController,
-                              hintText: 'User Name',
+                              emailController: firstNameController,
+                              hintText: 'First Name',
+                              keyboardType: TextInputType.text,
+                              suffixIcon: Icon(Icons.person_rounded),
+                              validator: (p0) {
+                                return AppValidation.validation(
+                                  type: AppValidationType.username,
+                                  username: p0,
+                                );
+                              },
+                            ),
+                            SizedBox(height: 10),
+                            CustomTextField(
+                              emailController: middleNameController,
+                              hintText: 'Middle Name',
+                              keyboardType: TextInputType.text,
+                              suffixIcon: Icon(Icons.person_rounded),
+                              validator: (p0) {
+                                return AppValidation.validation(
+                                  type: AppValidationType.username,
+                                  username: p0,
+                                );
+                              },
+                            ),
+                            SizedBox(height: 10),
+                            CustomTextField(
+                              emailController: lastNameController,
+                              hintText: 'Last Name',
                               keyboardType: TextInputType.text,
                               suffixIcon: Icon(Icons.person_rounded),
                               validator: (p0) {
@@ -124,6 +154,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 return AppValidation.validation(
                                   type: AppValidationType.email,
                                   email: p0,
+                                );
+                              },
+                            ),
+                            SizedBox(height: 10),
+                            CustomTextField(
+                              emailController: genderController,
+                              hintText: 'Gender',
+                              keyboardType: TextInputType.emailAddress,
+                              suffixIcon: Icon(Icons.person),
+                              validator: (p0) {
+                                return AppValidation.validation(
+                                  type: AppValidationType.username,
+                                  username: p0,
+                                );
+                              },
+                            ),
+
+                            SizedBox(height: 10),
+                            CustomTextField(
+                              emailController: ageController,
+                              hintText: 'Age',
+                              keyboardType: TextInputType.number,
+                              suffixIcon: Icon(Icons.numbers),
+                              validator: (p0) {
+                                return AppValidation.validation(
+                                  type: AppValidationType.phone,
+                                  phone: p0,
                                 );
                               },
                             ),
@@ -166,24 +223,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               onTap: () async {
                                 final pref =
                                     await SharedPreferences.getInstance();
-                                pref.setString(
-                                  'userName',
-                                  usernameController.text,
-                                );
-                                pref.setString('phone', phoneController.text);
+
                                 pref.setString('email', emailController.text);
-                                pref.setString(
-                                  'password',
-                                  passwordController.text,
-                                );
 
                                 if (formKey.currentState!.validate()) {
                                   try {
-                                    FirebaseStore.addUser(
-                                      userName: usernameController.text,
+                                    FirebaseStore.addUserRegistration(
+                                      firstName: firstNameController.text,
+                                      middleName: middleNameController.text,
+                                      lastName: lastNameController.text,
+                                      age: ageController.text,
+                                      phoneNumber: phoneController.text,
+                                      gender: genderController.text,
                                       email: emailController.text,
                                       password: passwordController.text,
-                                      phoneNumber: phoneController.text,
                                     );
                                     context.read<FirebaseAuthCubit>().register(
                                       emailController.text,

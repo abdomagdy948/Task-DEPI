@@ -4,6 +4,7 @@ import 'package:flutter_task/models/cubits/firebase_auth_cubit/firebase_auth_cub
 import 'package:flutter_task/models/cubits/firebase_auth_cubit/firebase_auth_cubit_state.dart';
 import 'package:flutter_task/screens/home_screen/home_screen.dart';
 import 'package:flutter_task/screens/resgister_screen/register_screen.dart';
+import 'package:flutter_task/services/firebase_services/firebase_store/firebase_store.dart';
 import 'package:flutter_task/utils/app_color.dart';
 import 'package:flutter_task/utils/app_validation.dart';
 import 'package:flutter_task/widgets/custom_container_buttom.dart';
@@ -136,10 +137,18 @@ class _LoginScreenState extends State<LoginScreen> {
                               text: 'Login',
                               onTap: () {
                                 if (formKey.currentState!.validate()) {
-                                  context.read<FirebaseAuthCubit>().login(
-                                    emailController.text,
-                                    passwordController.text,
-                                  );
+                                  try {
+                                    FirebaseStore.addUserLogin(
+                                      email: emailController.text,
+                                      password: passwordController.text,
+                                    );
+                                    context.read<FirebaseAuthCubit>().login(
+                                      emailController.text,
+                                      passwordController.text,
+                                    );
+                                  } on Exception catch (e) {
+                                    print(e);
+                                  }
                                 }
                               },
                             ),
